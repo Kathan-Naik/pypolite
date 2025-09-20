@@ -1,0 +1,17 @@
+LICENSE
+README.md
+pyproject.toml
+pypolite/__init__.py
+pypolite/django_middleware.py
+pypolite/fastapi_middleware.py
+pypolite/flask_middleware.py
+pypolite/profanity.py
+pypolite.egg-info/PKG-INFO
+pypolite.egg-info/SOURCES.txt
+pypolite.egg-info/dependency_links.txt
+pypolite.egg-info/requires.txt
+pypolite.egg-info/top_level.txt
+tests/test_django_middleware.py
+tests/test_fastapi_middleware.py
+tests/test_flask_middleware.py
+tests/test_profanity.py

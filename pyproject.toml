@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pypolite"
+version = "0.1.0"
+description = "Middleware to check API request fields for profanity/abusive words (Django, Flask, FastAPI)."
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+  { name="Kathan Naik", email="kathan.p.naik@gmail.com" }
+]
+
+# No framework is mandatory by default
+dependencies = []
+
+[project.optional-dependencies]
+django = ["django>=3.2"]
+flask = ["flask>=2.0"]
+fastapi = ["fastapi>=0.95", "starlette>=0.27"]
+
+[project.urls]
+"Homepage" = "https://github.com/yourname/pypolite"
+"Bug Tracker" = "https://github.com/yourname/pypolite/issues"
