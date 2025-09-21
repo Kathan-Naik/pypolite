@@ -12,6 +12,7 @@ if not settings.configured:
     settings.configure(
         DEBUG=True,
         SECRET_KEY="test",
+        ALLOWED_HOSTS=["*"],
         ROOT_URLCONF=__name__,
         MIDDLEWARE=[
             "django.middleware.common.CommonMiddleware",
