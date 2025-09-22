@@ -1,5 +1,5 @@
 import json
-from .profanity import contains_profanity_words
+from .profanity import SimpleChecker
 
 try:
     from django.http import JsonResponse
@@ -22,6 +22,7 @@ class PyPoliteDjangoMiddleware:
         self.profanity_words = getattr(settings, "PYPOLITE_WORDS", ["badword", "abuse"])
         self.endpoints_to_check = getattr(settings, "PYPOLITE_ENDPOINTS", ["/api/"])
         self.fields_to_check = getattr(settings, "PYPOLITE_FIELDS", ["message", "comment"])
+        self.simple_checker = SimpleChecker(profanity_words=self.profanity_words)
 
     def __call__(self, request):
         if request.path in self.endpoints_to_check and request.method in ["POST", "PUT", "PATCH"]:
@@ -33,7 +34,7 @@ class PyPoliteDjangoMiddleware:
 
                         for field in self.fields_to_check:
                             if field in data and isinstance(data[field], str):
-                                if contains_profanity_words(data[field], self.profanity_words):
+                                if self.simple_checker.contains_profanity(data[field]):
                                     return JsonResponse(
                                         {"error": f"Profanity detected in field '{field}'."},
                                         status=400
