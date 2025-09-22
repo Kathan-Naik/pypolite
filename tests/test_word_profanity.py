@@ -1,6 +1,5 @@
 import pytest
-from pypolite.profanity import contains_profanity_words
-
+from pypolite.profanity import SimpleChecker
 
 @pytest.mark.parametrize(
     "text,profanity_words,expected",
@@ -11,5 +10,6 @@ from pypolite.profanity import contains_profanity_words
         ("Case insensitive BADWORD check", ["badword", "abuse"], True),
     ],
 )
-def test_contains_profanity_words(text, profanity_words, expected):
-    assert contains_profanity_words(text, profanity_words) == expected
+def test_contains_profanity_words_word(text, profanity_words, expected):
+    simple_checker = SimpleChecker(profanity_words=profanity_words, mode="word")
+    assert simple_checker.contains_profanity(text) == expected
