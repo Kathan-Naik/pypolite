@@ -1,5 +1,5 @@
 import json
-from .profanity import contains_profanity_words
+from .profanity import SimpleChecker
 
 try:
     from flask import request, jsonify
@@ -21,6 +21,7 @@ class PyPoliteFlaskMiddleware:
         self.profanity_words = profanity_words or ["badword", "abuse"]
         self.endpoints_to_check = endpoints or ["/api/"]
         self.fields_to_check = fields or ["message", "comment"]
+        self.simple_checker = SimpleChecker(profanity_words=self.profanity_words)
 
         if app is not None:
             self.init_app(app)
@@ -37,7 +38,7 @@ class PyPoliteFlaskMiddleware:
 
                     for field in self.fields_to_check:
                         if field in data and isinstance(data[field], str):
-                            if contains_profanity_words(data[field], self.profanity_words):
+                            if self.simple_checker.contains_profanity(data[field]):
                                 return jsonify({"error": f"Profanity detected in field '{field}'."}), 400
             except Exception:
                 # Don’t break the app if parsing fails
